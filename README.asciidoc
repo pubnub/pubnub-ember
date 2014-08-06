@@ -1,0 +1,255 @@
+:source-highlighter: coderay
+[[top]]
+
+= PubNub Ember.js SDK =
+
+
+Welcome! We're here to get you started quickly with your
+integration between http://pubnub.com[PubNub] and http://emberjs.com[Ember.js].
+Ember.js the leading framework for creating *ambitious* web applications.
+PubNub makes it easy to integrate real-time bidirectional communication
+into your app.
+
+If you're interested in the SDK internals, please check out the
+http://pubnub.github.io/pubnub-ember/docs/pubnub-ember.html[annotated source code]!
+
+
+== The Easiest Way Possible ==
+
+Using http://bower.io[Bower]:
+
+```
+bower install pubnub-ember
+```
+
+
+== Integrating PubNub Ember.js SDK into Your App ==
+
+Your HTML page will include 3 key libraries:
+
+* The core PubNub JS Library (generally from the CDN)
+* Ember.js (usually as a Bower component), which also needs https://jquery.org/[jQuery] and http://handlebarsjs.com/[Handlebars]
+* PubNub Ember (as a Bower component or copy&paste)
+
+The HTML code looks like this:
+
+```html
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://cdn.pubnub.com/pubnub.min.js"></script>
+<script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-1.0.0.js"></script>
+<script src="http://builds.emberjs.com/release/ember.js"></script>
+<script src="components/pubnub-ember/pubnub-ember.js"></script>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+```
+
+We presume your application is already Ember.js-enabled using
+an +Ember.Application.create()+ call or the equivalent:
+
+```javascript
+window.MyApp = Ember.Application.create();
+```
+    
+Where +MyApp+ is the name of the Ember.js application we are
+presently working with.
+
+We presume the code for the app lives in:
+
+```html
+<script src="scripts/app.js"></script>
+```
+
+Inside +app.js+, add this extra tiny bit of code to initialize the PubNub service:
+
+```javascript
+MyApp.PubNub = PubNubEmber.extend({
+  cfg: {
+    subscribe_key: 'demo',
+    publish_key: 'demo',
+    uuid: user_id
+  }
+});
+```
+
+This will make sure that the +main:pubnub+ object is fully initialized
+and available to get injected into your controllers and routers.
+
+We presume the code for your controllers also lives in:
+
+```html
+<script src="scripts/app.js"></script>
+```
+
+The Ember.js +PubNub+ service is injected into the controller as follows:
+
+```javascript
+MyApp.ApplicationController = Ember.Controller.extend({
+  needs:['pubnub:main'],
+  ...
+```
+
+This allows you to access the +PubNub+ service anywhere in your controller
+using +this.get('pubnub')+. Sometimes you may need some extra tricks to
+use +this+ inside nested closures, *AKA "var self = this;"* outside the closure).
+
+That's it - you're ready to start using the Ember.js PubNub SDK!
+
+
+== Here's How to Use It ==
+
+PubNub has a wide feature set, including:
+
+* Publish/Subscribe Messaging
+* Message Playback and Storage
+* Presence
+* Storage and History
+* Multiplexing
+* Security, Access Management & Encryption
+
+
+=== Getting Started with the Publish / Subscribe API ===
+
+Publishing to channels is trivial. In this case, we presume
+the controller has properties for +user_id+ and +channel+, an input box
+bound to the +new_message+ property, and a submit button bound to
+action +publish+. Here's how to create an Ember.js action in your
+controller that publishes a message:
+
+```javascript
+MyApp.ApplicationController = Ember.Controller.extend({
+  ...
+  actions: {
+    // set up an Ember Action to publish a message
+    publish: function() {
+      this.get('pubnub').emPublish({
+        channel: this.get('channel'),
+        message: "[" + this.get('user_id') + "] " + this.get('new_message') 
+      });
+      this.set('new_message', ''); // resets the view to empty string (optional)
+    }
+  }
+  ...
+```
+
+We call the PubNub +emPublish+ method passing in the selected channel
+and the message to transmit. You can also transmit structured
+data as JSON objects which will be automatically serialized &
+deserialized by the PubNub library.
+
+Subscribing to channels is accomplished by calling the PubNub
++emSubscribe+ method. After the channel is subscribed, the app can
+register root scope message events by calling +PubNub.on+ with
+the event string returned by +PubNub.emMsgEv(channel)+.
+
+```javascript
+var pn = this.get('pubnub');
+var theChannel = this.get('channel');
+
+// Subscribe to the Channel
+pn.emSubscribe({ channel: theChannel })
+```
+
+Note - if you'd like, you can also provide callbacks to receive message
+and presence events as part of your +emSubscribe+ call using +message+
+and/or +presence+ handlers as follows:
+
+```javascript
+var pn = this.get('pubnub');
+var theChannel = this.get('channel');
+
+pn.emSubscribe({
+  channel: theChannel,
+  message: function() { console.log('msg', arguments); }, // optional
+  presence: function() { console.log('prs', arguments); } // optional
+})
+```
+
+Under the hood, the PubNub Ember.js SDK will wrap your callback and invoke
+it. Why do we wrap it? So that we can provide all the goodness of the
+Presence API - see the next sections for more info!
+
+This is the core of the PubNub API - allowing clients to subscribe and
+publish to channels, and have those events propagate in real-time to other
+applications connected to the same channels.
+
+
+=== Integrating Presence Events ===
+
+It's also easy to integrate presence events using the Ember.js API. In
+the example above, we just add an additional couple lines of code to
+call the +PubNub.emHereNow()+ method (retrieve current users), and register
+for presence events by calling +PubNub.on+ with the event string
+returned by +PubNub.emPrsEv(channel)+.
+
+```javascript
+var pn = this.get('pubnub');
+var theChannel = this.get('channel');
+
+// subscribe to the channel
+pn.emSubscribe({ channel: theChannel })
+
+// handle message events
+pn.on(pn.emMsgEv(theChannel), function(payload) { ... })
+
+// handle presence events
+pn.on(pn.emPrsEv(theChannel), function(payload) {
+  // payload contains message, channel, env...
+  console.log('got a presence event:', payload);
+})
+
+// obtain the list of current channel subscribers
+pn.emHereNow({ channel: theChannel })
+```
+
+Using the presence event as a trigger, we retrieve the Presence
+list for a channel using the +PubNub.emListPresence()+ function.
+
+```javascript
+var pn = this.get('pubnub');
+var theChannel = this.get('channel');
+
+pn.on(pn.emPrsEv(theChannel), function(payload) {
+  var users = pn.emListPresence(theChannel);
+  // do stuff with 'users'...
+});
+```
+
+=== Retrieving History ===
+
+It can be super-handy to gather the previous several hundred messages
+from the PubNub channel history. The PubNub Ember.js API makes this easy
+by bridging the event model of the PubNub JS history API and the Ember.js
++Evented+ event publish/subscribe model so that historical messages come
+through the same event interface.
+
+```javascript
+var pn = this.get('pubnub');
+var theChannel = this.get('channel');
+
+pn.emHistory({channel: theChannel, count:500});
+// message events will be sent out via Ember.Evented.trigger() to the 'on' handlers ...
+```
+
+
+=== Listing & Unsubscribing from Channels ===
+
+The PubNub Ember.js API takes care of keeping track of currently subscribed
+channels. Call the +PubNub.emListChannels()+ method to return a list of presently
+subscribed channels.
+
+```javascript
+var pn = this.get('pubnub');
+
+var channels = pn.emListChannels();
+```
+
+Unsubscribing is as easy as calling the +PubNub.emUnsubscribe()+ method. The
+library even takes care of removing the Ember.js event handlers for you to
+prevent memory leaks!
+
+```javascript
+var pn = this.get('pubnub');
+var theChannel = this.get('channel');
+
+pn.emUnsubscribe({channel: theChannel })
+```
+

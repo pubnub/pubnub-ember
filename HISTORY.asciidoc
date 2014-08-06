@@ -1,0 +1,6 @@
+0.1.0-beta.1
+
+* Initial Release
+* Support for Publish/Subscribe APIs with Ember.Evented hooks
+* Support for Presence and History APIs
+* Support for State, PAM APIs
