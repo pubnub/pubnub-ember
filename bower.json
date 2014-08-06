@@ -1,0 +1,29 @@
+{
+  "name": "pubnub-ember",
+  "version": "0.1.0-beta.1",
+  "authors": [
+    "Sunny Gleason <sunny.gleason@gmail.com>"
+  ],
+  "description": "Official PubNub EmberJS + Bower Package",
+  "main": "lib/pubnub-ember.js",
+  "keywords": [
+    "PubNub",
+    "Ember",
+    "EmberJS",
+    "Real",
+    "Time",
+    "WebSocket"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/pubnub/pubnub-ember",
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "docs",
+    "node_modules",
+    "scripts",
+    "site",
+    "test",
+    "tests"
+  ]
+}
