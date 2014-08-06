@@ -89,7 +89,7 @@ MyApp.ApplicationController = Ember.Controller.extend({
 
 This allows you to access the +PubNub+ service anywhere in your controller
 using +this.get('pubnub')+. Sometimes you may need some extra tricks to
-use +this+ inside nested closures, *AKA "var self = this;"* outside the closure).
+use +this+ inside nested closures (*AKA "var self = this;"* outside the closure).
 
 That's it - you're ready to start using the Ember.js PubNub SDK!
 
