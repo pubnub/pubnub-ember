@@ -3,7 +3,6 @@
   %head
     %script(src="http://code.jquery.com/jquery-1.10.1.min.js")
     %script(src="https://cdn.pubnub.com/pubnub.js")
-    %script(src="https://cdn.pubnub.com/pubnub-crypto.min.js")
     %script(src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-1.0.0.js")
     %script(src="http://builds.emberjs.com/release/ember.js")
     %script(src="http://pubnub.github.io/pubnub-ember/lib/pubnub-ember.js")
@@ -92,9 +91,6 @@
         actions: {
           // set up an Ember Action to publish a message
           publish: function() {
-            if (!this.get('new_message')) {
-              return;
-            }
             this.get('pubnub').emPublish({
               channel: this.get('channel'),
               message: "[" + this.get('user_id') + "] " + this.get('new_message') 
