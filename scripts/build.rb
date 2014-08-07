@@ -23,3 +23,6 @@ files.each do |m|
   `#{cmd}`
 end
 
+`asciidoctor README.asciidoc`
+`cp README.html site/index.html`
+
