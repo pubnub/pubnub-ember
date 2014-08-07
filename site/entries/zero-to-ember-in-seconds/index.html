@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
+<title>Ember.js 101: From Zero to Ember in PubNub Seconds</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
@@ -451,7 +451,6 @@ span.line-numbers { border-right: 1px solid #E5E5E5; color: #999; display: inlin
 </head>
 <body class="article">
 <div id="header">
-<h1><span class="image"><img src="pubnub.png" alt="pubnub"></span></h1>
 </div>
 <div id="content">
 <div class="sect1">
@@ -478,7 +477,20 @@ to coding your JavaScript in CoffeeScript, you can expect
 that to easily cut in half.</p>
 </div>
 <div class="paragraph">
-<p>Here is the <a href="http://pubnub.github.io/pubnub-ember/">live example</a>, and <a href="http://github.com/pubnub/pubnub-ember/">source</a>.</p>
+<p>Here are the goodies:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://pubnub.github.io/pubnub-ember/">(FIXME) Live example in CodePen</a></p>
+</li>
+<li>
+<p><a href="http://github.com/pubnub/pubnub-ember/">Official PubNub Ember.js SDK</a></p>
+</li>
+<li>
+<p>Source for this example in <a href="http://github.com/pubnub/pubnub-ember/blob/master/site/examples/chat/index.html">HTML</a> or <a href="http://github.com/pubnub/pubnub-ember/blob/master/site/examples/chat/index.haml">HAML</a></p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>We&#8217;ll walk you through the HTML section by section.</p>
@@ -492,6 +504,18 @@ that to easily cut in half.</p>
 <p>To get started, we&#8217;ll need to set up the script includes for
 PubNub and Ember.js, as well as an optional stylesheet for
 Bootstrap styles.</p>
+</div>
+<div class="paragraph">
+<p>For folks who are familiar with <a href="http://bower.io/">Bower</a>, you&#8217;ll probably
+start by bringing in <code>pubnub-ember</code> package using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay"><code>bower install pubnub-ember</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Whether you use Bower or not, your HTML includes will end up looking something like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -826,7 +850,7 @@ Or, if you <a href="mailto:help@pubnub.com">need a hand</a>!</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-07 11:10:43 EDT
+Last updated 2014-08-07 11:21:53 EDT
 </div>
 </div>
 </body>

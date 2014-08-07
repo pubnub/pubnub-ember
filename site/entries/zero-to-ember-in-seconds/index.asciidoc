@@ -1,5 +1,4 @@
 :source-highlighter: coderay
-= image:pubnub.png[] =
 
 == Ember.js 101: From Zero to Ember in PubNub Seconds ==
 
@@ -19,7 +18,11 @@ of HTML, of which less than 60 is JavaScript. If you're used
 to coding your JavaScript in CoffeeScript, you can expect
 that to easily cut in half.
 
-Here is the http://pubnub.github.io/pubnub-ember/[live example], and http://github.com/pubnub/pubnub-ember/[source].
+Here are the goodies:
+
+* http://pubnub.github.io/pubnub-ember/[(FIXME) Live example in CodePen]
+* http://github.com/pubnub/pubnub-ember/[Official PubNub Ember.js SDK]
+* Source for this example in http://github.com/pubnub/pubnub-ember/blob/master/site/examples/chat/index.html[HTML] or http://github.com/pubnub/pubnub-ember/blob/master/site/examples/chat/index.haml[HAML]
 
 We'll walk you through the HTML section by section.
 
@@ -28,6 +31,15 @@ We'll walk you through the HTML section by section.
 To get started, we'll need to set up the script includes for
 PubNub and Ember.js, as well as an optional stylesheet for
 Bootstrap styles.
+
+For folks who are familiar with http://bower.io/[Bower], you'll probably
+start by bringing in +pubnub-ember+ package using:
+
+```
+bower install pubnub-ember
+```
+
+Whether you use Bower or not, your HTML includes will end up looking something like this:
 
 ```html
 <!doctype html>
