@@ -1,0 +1,431 @@
+!!! 5
+%html
+  %head
+    %meta(charset="utf-8")
+    %meta(content="IE=edge,chrome=1" http-equiv="X-UA-Compatible")
+    %title Lorem ipsum dolor sit amet
+    %meta(content="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam." name="description")
+    %meta(content="width=device-width, target-densityDpi=device-dpi, initial-scale=1.0, maximum-scale=1.5;" name="viewport")
+    %script(src="//cdn.optimizely.com/js/30715011.js")
+    %link(href="https://www.pubnub.com/static/images/structure/favicon.png" rel="icon" type="image/png")
+    %link(href="https://www.pubnub.com/static/css/styles.css?ts=1407176722" rel="stylesheet")
+  %body#app.satemplate
+    %header.navbar-fixed-top.card
+      .full-width.gray.hidden-xs
+        .container
+          .row
+            .col-lg-12
+              %nav.navbar.nav-secondary
+                %ul.nav.pull-right
+                  %li
+                    %a(href="https://www.pubnub.com/company/") Company
+                  %li
+                    %a(href="https://www.pubnub.com/customers/") Customers
+                  %li
+                    %a(href="https://www.pubnub.com/company/contact-us/") Contact
+                  %li
+                    %a(href="https://www.pubnub.com/blog/") Blog
+                  %li
+                    %form.form-search(action="https://www.pubnub.com/search/")
+                      %input(name="cx" type="hidden" value="016318228531359278205:tloy-ifg-ta")
+                      %input(name="cof" type="hidden" value="FORID:9")
+                      %input(name="ie" type="hidden" value="UTF-8")
+                      %input#search-box.searchinput.full-width(name="q" placeholder="Search" type="search" value="")
+                      %button(type="submit")
+                        %i.fa.fa-search
+                        %span.hidden Search
+                  %li#menu-register
+                    %a.btn.btn-primary.btn-modal(href="https://www.pubnub.com/get-started/#get-started") Get Started
+                  %li#menu-login
+                    %a.btn.btn-login(href="https://admin.pubnub.com/#login" target="_blank") Log In
+      .container
+        .row
+          .col-lg-12
+            %nav.navbar.nav-main
+              %h1.logo.pull-left
+                %a#site-logo(href="https://www.pubnub.com/") PubNub
+              %ul.nav.pull-right.hidden-xs
+                %li
+                  %a(href="https://www.pubnub.com/iot-network/")
+                    I
+                    %span(style="text-transform:lowercase;") o
+                    T Network
+                %li.dropdown-link
+                  %a(href="https://www.pubnub.com/how-it-works/") How it Works
+                  %ul.dropdown-list.animate
+                    %li
+                      %a(href="https://www.pubnub.com/how-it-works/data-streams/")
+                        %i
+                          %img(alt="data streams icon" src="https://www.pubnub.com/static/images/icons/data-streams.png")/
+                        %span Data Streams
+                    %li
+                      %a(href="https://www.pubnub.com/how-it-works/presence/")
+                        %i
+                          %img(alt="presence icon" src="https://www.pubnub.com/static/images/icons/presence.png")/
+                        %span Presence
+                    %li
+                      %a(href="https://www.pubnub.com/how-it-works/storage-and-playback/")
+                        %i.push-down
+                          %img(alt="storage and playback icon" src="https://www.pubnub.com/static/images/icons/storage.png")/
+                        %span Storage &amp; Playback
+                    %li
+                      %a(href="https://www.pubnub.com/how-it-works/mobile/")
+                        %i.push-down
+                          %img(alt="mobile icon" src="https://www.pubnub.com/static/images/icons/mobile.png")/
+                        Mobile Push Gateway
+                    %li
+                      %a(href="https://www.pubnub.com/how-it-works/analytics/")
+                        %i
+                          %img(alt="analytics icon" src="https://www.pubnub.com/static/images/icons/analytics.png")/
+                        %span Analytics
+                    %li
+                      %a(href="https://www.pubnub.com/how-it-works/data-sync/")
+                        %i
+                          %img(alt="data sync icon" src="https://www.pubnub.com/static/images/icons/data-sync.png")/
+                        %span Data Sync
+                    %li
+                      %a(href="https://www.pubnub.com/how-it-works/pam/")
+                        %i.fa.fa-key(style="color:#ce1126 !important;font-size: 21px;position: relative;top: 8px;")
+                        %span
+                          Access Management
+                    %li
+                      %a(href="https://www.pubnub.com/how-it-works/security/")
+                        %i
+                          %img(alt="security icon" src="https://www.pubnub.com/static/images/icons/security.png")/
+                        %span Security
+                    %li
+                      %a(href="https://www.pubnub.com/how-it-works/network/")
+                        %i
+                          %img(alt="network icon" src="https://www.pubnub.com/static/images/icons/network.png")/
+                        Network
+                %li.dropdown-link
+                  %a(href="https://www.pubnub.com/developers/") Developers
+                  %ul.dropdown-list.animate
+                    %li
+                      %a(href="https://www.pubnub.com/developers/")
+                        %i.fa.fa-cogs
+                        %span SDKs
+                    %li
+                      %a(href="https://www.pubnub.com/console/")
+                        %i.fa.fa-terminal
+                        %span Dev Console
+                    %li
+                      %a(href="http://support.pubnub.com/" target="_blank")
+                        %i.fa.fa-question-circle
+                        %span Support
+                    %li
+                      %a(href="https://www.pubnub.com/documentation")
+                        %i.fa.fa-book
+                        %span Docs
+                    %li
+                      %a(href="https://www.pubnub.com/demos/" target="_blank")
+                        %i.fa.fa-video-camera
+                        %span Demos
+                    %li
+                      %a(href="https://www.pubnub.com/quick-start-guides/" style="padding-left: 13px;" target="_blank")
+                        %img(src="https://www.pubnub.com/static/images/quick-start-guides-red.gif" style="height: 22px; width: 22px;")/
+                        %span Quick Start
+                %li
+                  %a(href="https://www.pubnub.com/pricing/") Pricing
+                %li
+                  %a(href="https://www.pubnub.com/in-action/") Use Cases
+              %ul.nav.pull-right.visible-xs
+                %li
+                  %a(href="https://www.pubnub.com/how-it-works/") How it Works
+                %li
+                  %a(href="https://www.pubnub.com/pricing/") Pricing
+                %li
+                  %a(href="https://www.pubnub.com/developers/") Developers
+                %li
+                  %a(href="https://www.pubnub.com/in-action/") Use Cases
+                %li
+                  %a(href="https://www.pubnub.com/customers/") Customers
+                %li
+                  %a(href="https://www.pubnub.com/blog/") Blog
+    #alert_container.alert.hidden
+    %style(media="screen")
+      a[name=tutorial]:before {
+      content:"";
+      display:block;
+      height:100px; /* fixed header height*/
+      margin:-100px 0 0; /* negative fixed header height */
+      }
+      \#app-hero{
+      background:url(https://www.pubnub.com/static/images/congruent_pentagon.png);
+      background-attachment:fixed;
+      }
+    #app-hero.section.gray.padding-extra
+      .container
+        %h1.text-center Template
+        .row
+          .col-sm-6.col-sm-offset-3
+            %p.text-center
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+        .row
+          .col-sm-6.col-sm-offset-3.padding-top.text-center
+            %a.btn.btn-primary.card(href="") Github
+            %a.btn.btn-primary.card(href="") Zip
+            %a.btn.btn-primary.card(href="#tutorial") Tutorial
+    / Place working demo in here
+    #demo.section.padding-extra.white
+    / Place this anchor where ever the tutorial starts, often this will be directly about the first code block
+    %a(name="tutorial")
+    / Code Blocks
+    / It should be pretty clear how to add or remove lines
+    .section.gray.padding-extra
+      .container
+        .col-sm-5
+          .code-wrap.flex
+            .code-header
+              %ul
+                %li.red
+                  %i.fa.fa-circle
+                %li.yellow
+                  %i.fa.fa-circle
+                %li.green
+                  %i.fa.fa-circle
+            .code-content
+              %ol.list-code.animate(data-type="one")
+                %li.code-line-wrap
+                  %ol.code-line-numbers
+                    %li 1
+                    %li 2
+                    %li 3
+                    %li 4
+                    %li 5
+                    %li 6
+                    %li 7
+                    %li 8
+                %li pubnub.grant({
+                %li.indent
+                  channel:
+                  = succeed "," do
+                    %span.blue 'my_channel'
+                %li.indent
+                  auth_key:
+                  = succeed "," do
+                    %span.blue 'my_authkey'
+                %li.indent
+                  read:
+                  = succeed "," do
+                    %span.red true
+                %li.indent
+                  write:
+                  = succeed "," do
+                    %span.red true
+                %li.indent
+                  ttl:
+                  = succeed "," do
+                    %span.blue 5
+                %li.indent
+                  callback:
+                  = succeed "(m){console.log(m)}" do
+                    %span.blue function
+                %li });
+        .col-sm-7
+          .headline.h3 Headline
+          %p
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+          .ul
+            %li Item
+            %li Item
+            %li Item
+    / Text in this block will be oriented to the left
+    .section.white.padding-extra
+      .container
+        .col-sm-9
+          .headline.h3 Headline
+          %p
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        .col-sm-3
+          %img(alt="Realtime Red cloud" src="https://www.pubnub.com/static/images/illustrations/cloud-red.png")/
+    / Text in this block will be oriented to the right
+    .section.padding-extra.gray
+      .container
+        .col-sm-9.pull-right
+          .headline.h3 Headline
+          %p
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        .col-sm-3.pull-left
+          %img(alt="Realtime Red cloud" src="https://www.pubnub.com/static/images/illustrations/cloud-red.png")/
+    / Text in this block will be oriented to the left
+    .section.white.padding-extra
+      .container
+        .col-sm-9
+          .headline.h3 Headline
+          %p
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        .col-sm-3
+          %img(alt="Realtime Red cloud" src="https://www.pubnub.com/static/images/illustrations/cloud-red.png")/
+    /
+      This section is to add the relevent blog posts to this application and to display the features used by the application
+      Add as many as youd like
+    .section.padding-extra.gray
+      .container
+        .col-sm-6
+          .headline.h3 Blog Posts
+          %ul
+            %li
+              %a(href="") Blog 1
+            %li
+              %a(href="") Blog 2
+            %li
+              %a(href="") Blog 3
+        .col-sm-6
+          .headline.h3 Features Used
+          %ul
+            %li
+              %a(href="https://www.pubnub.com/how-it-works/data-streams/" target="_blank") Data Streams
+            %li
+              %a(href="https://www.pubnub.com/how-it-works/presence/" target="_blank") Presence
+    / Associated JS needed for the demo can be linked here, using an iFrame to template in the demo is to be preferred though
+    %section.red
+      .container
+        .col-sm-12.text-center
+          %h4.text-thin
+            %span.break Start Building
+            Real-time Apps Now!
+        .col-sm-4
+        .col-sm-4
+          %a.btn.btn-white.btn-large.text-red.text-center.brt(href="https://www.pubnub.com/get-started/#get-started") Get Started
+        .col-sm-4
+    %footer
+      .container
+        .row.text-center
+          .col-sm-9.clearfix
+            %nav.nav-footer
+              %ul.nav
+                %li.first
+                  %a(href="https://www.pubnub.com/how-it-works/") How It Works
+                %li
+                  %a(href="https://www.pubnub.com/how-it-works/data-streams/") Data Streams
+                %li
+                  %a(href="https://www.pubnub.com/how-it-works/presence/") Presence
+                %li
+                  %a(href="https://www.pubnub.com/how-it-works/storage-and-playback/") Storage &amp; Playback
+                %li
+                  %a(href="https://www.pubnub.com/how-it-works/mobile/") Mobile Push Gateway
+                %li
+                  %a(href="https://www.pubnub.com/how-it-works/analytics/") Analytics
+                %li
+                  %a(href="https://www.pubnub.com/how-it-works/data-sync/") Data Sync
+                %li
+                  %a(href="https://www.pubnub.com/how-it-works/security/") Security
+                %li
+                  %a(href="https://www.pubnub.com/how-it-works/network/") Network
+              %ul.nav
+                %li.first
+                  %a(href="https://www.pubnub.com/pricing/") Pricing
+              %ul.nav
+                %li.first
+                  %a(href="https://www.pubnub.com/developers/") Developers
+                %li
+                  %a(href="https://www.pubnub.com/docs/javascript/javascript-sdk.html") Docs
+                %li
+                  %a(href="https://www.pubnub.com/console/") Dev Console
+                %li
+                  %a(href="https://help.pubnub.com/home" target="_blank") Support
+                %li
+                  %a(href="https://www.pubnub.com/demos/") Demos
+                %li
+                  %a(href="https://www.pubnub.com/quick-start-guides/") Quick Start Guides
+                %li
+                  %a(href="https://www.pubnub.com/docs/javascript/tutorial/data-push.html") Tutorials
+                %li
+                  %a(href="https://www.pubnub.com/websockets/") Websockets
+              %ul.nav
+                %li.first
+                  %a(href="https://www.pubnub.com/customers/") Customers
+              %ul.nav
+                %li.first
+                  %a(href="https://www.pubnub.com/company/") Company
+                %li
+                  %a(href="https://www.pubnub.com/company/team/") Team
+                %li
+                  %a(href="https://www.pubnub.com/company/leadership/") Leadership
+                %li
+                  %a(href="https://www.pubnub.com/press/") Press &amp; News
+                %li
+                  %a(href="https://www.pubnub.com/events/") Events
+                %li
+                  %a(href="https://www.pubnub.com/company/careers/") Careers
+                %li
+                  %a(href="https://www.pubnub.com/company/contact-us/") Contact Us
+              %ul.nav
+                %li.first
+                  %a(href="/blog/") Blog
+          .col-sm-3
+            %nav.nav-social.pull-right
+              %ul.nav
+                %li
+                  %a(href="http://twitter.com/PubNub" target="_blank")
+                    %i.fa.fa-twitter
+                %li
+                  %a(href="http://www.linkedin.com/company/pubnub" target="_blank")
+                    %i.fa.fa-linkedin
+                %li
+                  %a(href="http://www.facebook.com/PubNub" target="_blank")
+                    %i.fa.fa-facebook
+                %li
+                  %a(href="http://plus.google.com/116291363909949130218/posts" target="_blank")
+                    %i.fa.fa-google-plus
+                %li
+                  %a(href="http://www.pubnub.com/blog/feed/" target="_blank")
+                    %i.fa.fa-rss
+                %li
+                  %a(href="http://vimeo.com/pubnub" target="_blank")
+                    %i.fa.fa-vimeo-square
+                %li
+                  %a(href="http://www.youtube.com/pubnubtv" target="_blank")
+                    %i.fa.fa-youtube-play
+            %nav.nav-footer.pull-right
+              %ul.nav.text-right
+                %li
+                  %small &copy; 2009-2014 PubNub, Inc.
+                %li
+                  %a(href="https://www.pubnub.com/terms-and-conditions/") Terms &amp; Conditions
+                %li
+                  %a(href="https://www.pubnub.com/privacy-policy/") Privacy Policy
+    #get-started.modal-container
+      .form-wrap.form-wrap-modal.hide-labels
+        %a.close(href="https://www.pubnub.com/")
+          %i.fa.fa-times-circle
+        %h3 Get Started
+        #error-codes.alert.alert-danger(style="display:none;")
+        %form#sign-up-form-partial.form-general(action="https://admin.pubnub.com/api/users" method="POST")
+          %label(for="first-name") First Name
+          %input#first-name(name="first" placeholder="First Name *" required="" type="text")/
+          %label(for="last-name") Last Name
+          %input#last-name(name="last" placeholder="Last Name *" required="" type="text")/
+          %label(for="company") Company
+          %input#company(name="company" placeholder="Company *" required="" type="text")/
+          %label(for="company") Phone Number
+          %input#phone(name="phone" placeholder="Phone" type="text")/
+          %label(for="email-2") Email
+          %input#email-2(name="email" placeholder="Email *" required="" type="email")/
+          %label(for="password") Password
+          %input#password(name="password" placeholder="Password *" required="" type="password")/
+          %input(name="xsite" type="hidden" value="1")/
+          %p
+            By clicking
+            = succeed "," do
+              %span#create_account_text Create Free Account
+            you agree to
+            = succeed "." do
+              %a(href="https://www.pubnub.com/terms-and-conditions/" target="_blank") PubNub's terms and conditions
+          %input#create_account_btn.btn.btn-primary(type="submit" value="Create Free Account")/
+          #utms
+            %input#utm_source(name="utm_source" type="hidden" value="")/
+            %input#utm_medium(name="utm_medium" type="hidden" value="")/
+            %input#utm_content(name="utm_content" type="hidden" value="")/
+            %input#utm_campaign(name="utm_campaign" type="hidden" value="")/
+            %input#utm_keyword(name="utm_keyword" type="hidden" value="")/
+      .modal-backdrop
+    %script(src="https://cdn.pubnub.com/pubnub.min.js")
+    / %script(src="https://www.pubnub.com/static/js/demo.js")
+    / %script(src="https://www.pubnub.com/static/js/main.js?ts=1407176722")
+    #loading
+      .mask
+      .indication
+        %img(src="https://www.pubnub.com/static/images/loading.gif")/
+        %h3.text-red Loading...

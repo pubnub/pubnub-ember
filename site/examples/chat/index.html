@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <script src='http://code.jquery.com/jquery-1.10.1.min.js'></script>
+    <script src='https://cdn.pubnub.com/pubnub.js'></script>
+    <script src='https://cdn.pubnub.com/pubnub-crypto.min.js'></script>
+    <script src='http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-1.0.0.js'></script>
+    <script src='http://builds.emberjs.com/release/ember.js'></script>
+    <script src='lib/pubnub-ember.js'></script>
+    <link href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css' rel='stylesheet'>
+  </head>
+  <body>
+    <script data-template-name='application' type='text/x-handlebars'>
+      <div class="container">
+      <h4>Online Users</h4>
+      <ul>
+      {{#each user in users}}
+      <li>{{user}}</li>
+      {{/each}}
+      </ul>
+      <br />
+      <h4>Chat History ({{messages.length}})</h4>
+      <form>
+      {{input type="text" value=new_message placeholder="Enter a message"}}
+      <input type="submit" {{action publish}} />
+      </form>
+      <br />
+      <div class="well">
+      <ul>
+      {{#each message in messages}}
+      <li>{{message}}</li>
+      {{/each}}
+      </ul>
+      </div>
+      </div>
+    </script>
+    <script>
+      window.Mini = Ember.Application.create();
+      var user_id = "User " + Math.round(Math.random() * 1000);
+      
+      Mini.PubNub = PubNubEmber.extend({
+        cfg: {
+          subscribe_key: 'demo',
+          publish_key: 'demo',
+          uuid: user_id
+        }
+      });
+      
+      Mini.ApplicationController = Ember.Controller.extend({
+        needs:['pubnub:main'],
+        channel: 'The EmberJS Channel',
+        new_message: '',
+        user_id: user_id,
+        // Ember Dynamic collection for messages list (live-updates the view)
+        messages: Ember.ArrayProxy.create({ content: Ember.A(['Welcome to The EmberJS Channel']) }),
+        // Ember Dynamic collection for user list (live-updates the view)
+        users: Ember.ArrayProxy.create({ content: Ember.A([]) }),
+      
+        init: function() {
+          var pn   = this.get('pubnub');   // PubNub service instance
+          var chan = this.get('channel');  // channel name
+          var self = this;                 // reference to 'this' for callbacks
+      
+          // Subscribe to the Channel
+          pn.emSubscribe({ channel: chan });
+      
+          // Register for message events
+          pn.on(pn.emMsgEv(chan), function(payload){
+            self.get('messages').pushObject(payload.message);
+          });
+      
+          // Register for presence events
+          pn.on(pn.emPrsEv(chan), function(payload){
+            self.get('users').set('content', pn.emListPresence(chan));
+          });
+          
+          // Pre-Populate the user list (optional)
+          pn.emHereNow({ channel: chan });
+      
+          // Populate message history (optional)
+          pn.emHistory({
+            channel: chan,
+            count: 500
+          });
+        },
+      
+        actions: {
+          // set up an Ember Action to publish a message
+          publish: function() {
+            if (!this.get('new_message')) {
+              return;
+            }
+            this.get('pubnub').emPublish({
+              channel: this.get('channel'),
+              message: "[" + this.get('user_id') + "] " + this.get('new_message') 
+            });
+            this.set('new_message', '');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,281 @@
+:source-highlighter: coderay
+= image:pubnub.png[] =
+
+== Ember.js 101: From Zero to Ember in PubNub Seconds ==
+
+Translation: "How to get a real-time app working with PubNub
+and Ember.js in 60 seconds or less".
+
+Here at PubNub, we've been paying attention to the incredible ascent
+of Ember.js - in the short time it's been around, it has amassed
+a huge following and changed the way we build Web Applications.
+
+We thought it would be kind of cool to put together the smallest
+possible (but still interesting) sample application showcasing
+PubNub and Ember.js.
+
+The result is a sample application that fits into 99 lines
+of HTML, of which less than 60 is JavaScript. If you're used
+to coding your JavaScript in CoffeeScript, you can expect
+that to easily cut in half.
+
+Here is the http://pubnub.github.io/pubnub-ember/[live example], and http://github.com/pubnub/pubnub-ember/[source].
+
+We'll walk you through the HTML section by section.
+
+== Step 1: Get Your Includes On ==
+
+To get started, we'll need to set up the script includes for
+PubNub and Ember.js, as well as an optional stylesheet for
+Bootstrap styles.
+
+```html
+<!doctype html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://cdn.pubnub.com/pubnub.min.js"></script>
+<script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-1.0.0.js"></script>
+<script src="http://builds.emberjs.com/release/ember.js"></script>
+<script src="components/pubnub-ember/pubnub-ember.js"></script>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+</head>
+<body>
+```
+
+What does all this stuff do?
+
+* `jquery-1.10.1.min.js`: bring in some JQuery (used by Ember.js)
+* `handlebars-1.0.0.js`: bring in some Handlebars (used by Ember.js)
+* `pubnub.min.js`: the main PubNub communication library for JavaScript
+* `ember.js`: that Ember.js goodness we all know and love
+* `pubnub-ember.js`: bring in the official PubNub SDK for Ember.js
+* `bootstrap.min.css`: bring in the bootstrap styles
+
+Once these are all set, you're good to start coding!
+
+== Step 2: Set Up Your HTML Layout and Dynamic Content == 
+
+Let's get the HTML set up as an application template:
+
+```html
+<script type="text/x-handlebars" data-template-name="application">
+<div class="container">
+```
+
+Ember.js needs to be able to find your app's view. To make that happen,
+we use an inline script of type +text/x-handlebars+ containing the div
+element we want to Ember.js-ify. When Ember.js tries to display our
+application, it'll look for the handlebars template named "application".
+
+```html
+<h4>Online Users</h4>
+<ul>
+  {{#each user in users}}
+  <li>{{user}}</li>
+  {{/each}}
+</ul>
+```
+
+Wow, how awesome is that? We can create a dynamic list of users
+simply by using a `ul` element and an `li` element that's
+set up to iterate over all of the items in the +users+ property
+of the controller. For the purposes of this demo, each user object
+is a simple string that comes from the channel's presence list.
+
+```html
+<h4>Chat History {{messages.length}}</h4>
+```
+
+Just a header. Nothing to see here. One thing that's kind of nifty is
+that we substitute in the length attribute from the controller's
++messages+ array.
+
+```html
+<form>
+  {{input type="text" value=new_message placeholder="Enter a message"}}
+  <input type="submit" {{action publish}} />
+</form>
+```
+
+This is the first interactive feature - a simple text box
+that binds its content to the +new_message+ property of the
+controller, and a submit button for the form. The form submit
+function is bound to the +publish+ action in the scope. What does
+it do? We'll find out soon!
+
+```html
+<div class="well">
+<ul>
+{{#each message in messages}}
+<li>{{message}}</li>
+{{/each}}
+</ul>
+</div>
+</div>
+</script>
+```
+
+Now that you're already an Ember.js and PubNub expert, you
+can see that this is just a dynamic collection of messages
+from the controller's +messages+ object.
+
+Not too shabby! But you may ask, how does it all work? Let's
+check out the JavaScript!
+
+== Step 3: JavaScript - Where the Magic Happens ==
+
+Let's walk through the JavaScript and see how it's all put
+together.
+
+```javascript
+<script>
+window.Mini = Ember.Application.create();
+var user_id = "User " + Math.round(Math.random() * 1000);
+
+Mini.PubNub = PubNubEmber.extend({
+  cfg: {
+    subscribe_key: 'demo',
+    publish_key: 'demo',
+    uuid: user_id
+  }
+});
+
+Mini.ApplicationController = Ember.Controller.extend({
+  needs:['pubnub:main'],
+```
+
+Let's take this piece by piece:
+
+* We create a normal `script` tag in the body - that's easy enough. You may keep your JS in a separate file - that's totally cool.
+* The next part is defining an Ember.js application where all of this lives.
+* We set up a random +user_id+ for our application (your app will probably do something different).
+* We then initialize a +PubNubEmber+ service that will be our bridge into the PubNub world.
+
+Of course, for *your* application, you should initialize the service
+with your own publish and subscribe keys from your PubNub account.
+
+It's important to initialize the PubNub only once during
+the course of the application. The UUID is the globally
+unique user ID you'd like to use for identifying the user.
+
+* We start initializing an ApplicationController that will hold all of our application logic
+* First, we declare an Ember.js dependency on the `pubnub:main` object within the controller using Ember's +needs+ keyword
+
+This is the magic that lets us access the PubNub service within our
+application.
+
+The `controller` object is an Ember.js controller - that's
+the place where all of the data and functions for our application
+will live. Again, notice how we're injecting the PubNub service into
+our controller - that's how we get access to all of the Real-Time
+goodness that PubNub provides.
+
+Let's take a look at the body of the controller object:
+
+```javascript
+  channel: 'The EmberJS Channel',
+  new_message: '',
+  user_id: user_id,
+  // Ember Dynamic collection for messages list (live-updates the view)
+  messages: Ember.ArrayProxy.create({ content: Ember.A(['Welcome to The EmberJS Channel']) }),
+  // Ember Dynamic collection for user list (live-updates the view)
+  users: Ember.ArrayProxy.create({ content: Ember.A([]) }),
+```
+
+These are pretty self-explanatory - just settings up variables
+we'll use for the application.
+
+One *major* thing I should highlight is use of the Ember.js ArrayProxy
+class instead of regular JavaScript arrays. For simple/primitive properties
+like Strings and Numbers, Ember.js is already set to auto-update the view.
+Arrays need a little more magic. By using Ember.js ArrayProxy instances,
+we can use live data binding within our view knowing that when
+those arrays change in the controller, the changes will be instantly
+reflected in the view.
+
+```javascript
+init: function() {
+  var pn   = this.get('pubnub');   // PubNub service instance
+  var chan = this.get('channel');  // channel name
+  var self = this;                 // reference to 'this' for callbacks
+
+  // Subscribe to the Channel
+  pn.emSubscribe({ channel: chan });
+```
+
+I bet you can't tell what that does! You're right - it
+calls the `emSubscribe` function which creates a
+new channel subscription for our app. The channel name
+is specified in the variables above. It's also possible
+to subscribe to multiple channels, and PubNub does all the
+work to make it easy.
+
+Ok, now that we've subscribed, how does our app know about
+messages coming in?
+
+```javascript
+  // Register for message events
+  pn.on(pn.emMsgEv(chan), function(payload){
+    self.get('messages').pushObject(payload.message);
+  });
+```
+
+Here we bind an event handler to listen for message events.
+The PubNub Ember.js library receives all of those events
+coming from the channel and transforms them into Ember.js +Evented+
+events. Here we're saying that when a message comes in,
+push it into the controller's +messages+ collection. Since
+it's not easy for Ember.js to detect an array push
+call, we use the special ArrayProxy +pushObject+ method
+to make sure that Ember.js updates the view properly.
+
+```javascript
+  // Register for presence events
+  pn.on(pn.emPrsEv(chan), function(payload){
+    self.get('users').set('content', pn.emListPresence(chan));
+  });
+```
+
+If you'd like your app to display contents of the dynamic
+user list, we try to keep it easy with the Ember.js
+library. In the code snippet above, we register an
+event listener for presence events that will update the
+controller's +users+ collection with the user list that
+the Ember.js library is keeping track of for us. This
+applies to join and leave events. Pretty nifty!
+
+```javascript
+  // Pre-Populate the user list (optional)
+  pn.emHereNow({ channel: theChannel });
+```
+
+If you'd like to bring in the user list, just
+add the call above - it'll fire off a presence
+event, which will be handled by the presence
+handler we registered above using `pn.on(pn.emPrsEv(theChannel) ...`.
+
+```javascript
+  // Populate message history (optional)
+  pn.emHistory({
+    channel: theChannel,
+    count: 500
+  });
+```
+
+If you'd like to bring in message history, just
+add the call above - it'll fire all of the message
+events, which will be handled by the event handler
+we registered above using `pn.on(pn.emMsgEv(theChannel) ...`.
+
+
+```javascript
+});
+</script>
+</body>
+</html>
+```
+
+And we're done! We hope you found this useful,
+please keep in touch and reach out if you have https://github.com/pubnub/pubnub-ember/issues[ideas].
+Or, if you mailto:help@pubnub.com[need a hand]!
