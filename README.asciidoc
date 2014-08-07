@@ -70,6 +70,9 @@ MyApp.PubNub = PubNubEmber.extend({
 });
 ```
 
+Of course, for *your* application, you should initialize the service
+with your own publish and subscribe keys from your PubNub account.
+
 This will make sure that the +main:pubnub+ object is fully initialized
 and available to get injected into your controllers and routers.
 
@@ -88,7 +91,7 @@ MyApp.ApplicationController = Ember.Controller.extend({
 ```
 
 This allows you to access the +PubNub+ service anywhere in your controller
-using +this.get('pubnub')+. Sometimes you may need some extra tricks to
+using +this.get(''pubnub'')+. Sometimes you may need some extra tricks to
 use +this+ inside nested closures (*AKA "var self = this;"* outside the closure).
 
 That's it - you're ready to start using the Ember.js PubNub SDK!
